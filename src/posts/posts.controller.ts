@@ -9,6 +9,7 @@ import {
   UsePipes,
   ValidationPipe,
   UseFilters,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './posts.dto';
@@ -31,17 +32,20 @@ export class PostsController {
 
   @Get(':id')
   @UseFilters(HttpExceptionFilter)
-  getById(@Param('id') id: string) {
-    return this.postsService.getById(Number(id));
+  getById(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.getById(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updates: Partial<CreatePostDto>) {
-    return this.postsService.update(Number(id), updates);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updates: Partial<CreatePostDto>,
+  ) {
+    return this.postsService.update(id, updates);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
-    return this.postsService.delete(Number(id));
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.postsService.delete(id);
   }
 }
