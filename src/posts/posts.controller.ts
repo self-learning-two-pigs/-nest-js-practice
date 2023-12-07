@@ -10,15 +10,12 @@ import {
   ValidationPipe,
   UseFilters,
   ParseIntPipe,
-  UseGuards,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './posts.dto';
 import { HttpExceptionFilter } from '../common/filter/http-exception/http-exception.filter';
-import { DemoGuard } from '../common/guard/demo/demo.guard';
 
 @Controller('posts')
-@UseGuards(DemoGuard)
 export class PostsController {
   constructor(private postsService: PostsService) {}
 
