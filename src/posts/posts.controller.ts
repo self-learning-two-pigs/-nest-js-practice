@@ -11,12 +11,14 @@ import {
   UseFilters,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './posts.dto';
 import { HttpExceptionFilter } from '../common/filter/http-exception/http-exception.filter';
 import { DemoRoleGuard } from '../common/guard/demo-role/demo-role.guard';
 import { Roles } from '../common/decorator/roles/roles.decorator';
+import { TransformInterceptor } from '../common/interceptor/transform/transform.interceptor';
 
 @Controller('posts')
 export class PostsController {
@@ -29,6 +31,7 @@ export class PostsController {
   }
 
   @Get()
+  @UseInterceptors(TransformInterceptor)
   getAll() {
     return this.postsService.getAll();
   }
