@@ -11,12 +11,12 @@ import {
   UseFilters,
   ParseIntPipe,
   UseGuards,
-  SetMetadata,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './posts.dto';
 import { HttpExceptionFilter } from '../common/filter/http-exception/http-exception.filter';
 import { DemoRoleGuard } from '../common/guard/demo-role/demo-role.guard';
+import { Roles } from '../common/decorator/roles/roles.decorator';
 
 @Controller('posts')
 export class PostsController {
@@ -36,7 +36,7 @@ export class PostsController {
   @Get(':id')
   @UseFilters(HttpExceptionFilter)
   @UseGuards(DemoRoleGuard)
-  @SetMetadata('roles', ['member'])
+  @Roles('member', 'guest')
   getById(@Param('id', ParseIntPipe) id: number) {
     return this.postsService.getById(id);
   }
