@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './posts.dto';
-import { HttpExceptionFilter } from '../common/http-exception/http-exception.filter';
+import { HttpExceptionFilter } from '../common/filter/http-exception/http-exception.filter';
 
 @Controller('posts')
 export class PostsController {
