@@ -8,9 +8,11 @@ import {
   Put,
   UsePipes,
   ValidationPipe,
+  UseFilters,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './posts.dto';
+import { HttpExceptionFilter } from '../common/http-exception/http-exception.filter';
 
 @Controller('posts')
 export class PostsController {
@@ -28,6 +30,7 @@ export class PostsController {
   }
 
   @Get(':id')
+  @UseFilters(HttpExceptionFilter)
   getById(@Param('id') id: string) {
     return this.postsService.getById(Number(id));
   }
