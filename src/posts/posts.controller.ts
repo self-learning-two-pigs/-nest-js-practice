@@ -21,6 +21,7 @@ import { DemoRoleGuard } from '../common/guard/demo-role/demo-role.guard';
 import { Roles } from '../common/decorator/roles/roles.decorator';
 import { TransformInterceptor } from '../common/interceptor/transform/transform.interceptor';
 import { User } from '../common/decorator/user/user.decorator';
+import { DemoPipePipe } from '../common/pipe/demo-pipe/demo-pipe.pipe';
 
 @Controller('posts')
 export class PostsController {
@@ -34,7 +35,7 @@ export class PostsController {
 
   @Get()
   @UseInterceptors(TransformInterceptor)
-  getAll(@Req() req, @User() user) {
+  getAll(@Req() req, @User('', DemoPipePipe) user) {
     console.log('req.user', req.user);
     console.log('user', user);
     return this.postsService.getAll();
