@@ -15,7 +15,7 @@ export class Post {
   title: string;
 
   @Column('longtext', { nullable: true })
-  content: string;
+  content?: string;
 
   @CreateDateColumn()
   createdAt: Date;
