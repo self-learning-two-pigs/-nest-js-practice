@@ -29,36 +29,36 @@ export class PostsController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  async create(@Body() createPostDto: CreatePostDto) {
+    return await this.postsService.create(createPostDto);
   }
 
   @Get()
   @UseInterceptors(TransformInterceptor)
-  getAll(@Req() req, @User('', DemoPipePipe) user) {
+  async getAll(@Req() req, @User('', DemoPipePipe) user) {
     console.log('req.user', req.user);
     console.log('user', user);
-    return this.postsService.getAll();
+    return await this.postsService.getAll();
   }
 
   @Get(':id')
   @UseFilters(HttpExceptionFilter)
   @UseGuards(DemoRoleGuard)
   @Roles('member', 'guest')
-  getById(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.getById(id);
+  async getById(@Param('id', ParseIntPipe) id: number) {
+    return await this.postsService.getById(id);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updates: Partial<CreatePostDto>,
   ) {
-    return this.postsService.update(id, updates);
+    return await this.postsService.update(id, updates);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return this.postsService.delete(id);
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.postsService.delete(id);
   }
 }

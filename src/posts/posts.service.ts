@@ -1,41 +1,38 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Post } from './posts.entity';
 import { CreatePostDto } from './posts.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PostsService {
-  posts: Post[] = [];
-  index = 1;
+  constructor(
+    @InjectRepository(Post) private postRepository: Repository<Post>,
+  ) {}
 
-  create(post: CreatePostDto): Post {
-    this.index = this.index + 1;
-    const newPost = {
-      ...post,
-      id: this.index,
-    };
-    this.posts = [...this.posts, newPost];
-    return newPost;
+  async create(createPostDto: CreatePostDto): Promise<Post> {
+    const post = this.postRepository.create(createPostDto);
+    await this.postRepository.save(post);
+    return post;
   }
 
-  getAll(): Post[] {
-    return this.posts;
+  async getAll(): Promise<Post[]> {
+    return await this.postRepository.find();
   }
 
-  getById(id: number): Post {
-    const result = this.posts.find((post) => post.id === id);
+  async getById(id: number): Promise<Post> {
+    const result = await this.postRepository.findOneBy({ id });
     if (result) {
       return result;
     }
     throw new NotFoundException('not found');
   }
 
-  update(id: number, updates: Partial<Post>) {
-    this.posts = this.posts.map((post) =>
-      post.id === id ? { ...post, ...updates } : post,
-    );
+  async update(id: number, updates: Partial<Post>) {
+    return await this.postRepository.update(id, updates);
   }
 
-  delete(id: number) {
-    this.posts = this.posts.filter((post) => post.id !== id);
+  async delete(id: number) {
+    await this.postRepository.delete(id);
   }
 }

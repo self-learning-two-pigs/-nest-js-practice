@@ -6,9 +6,23 @@ import { LoggingMiddleware } from './common/middleware/logging/logging.middlewar
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { DemoGuard } from './common/guard/demo/demo.guard';
 import { CountTimeInterceptor } from './common/interceptor/count-time/count-time.interceptor';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [PostsModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'nest',
+      autoLoadEntities: true,
+      logging: true,
+      synchronize: true,
+    }),
+    PostsModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
