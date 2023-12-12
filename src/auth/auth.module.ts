@@ -6,6 +6,10 @@ import { AuthService } from './auth.service';
 import { UserModule } from '../user/user.module';
 import { JwtKey, JwtStrategy } from './jwt.strategy';
 
+const passportModule = PassportModule.register({
+  defaultStrategy: 'jwt',
+});
+
 @Module({
   imports: [
     UserModule,
@@ -15,11 +19,10 @@ import { JwtKey, JwtStrategy } from './jwt.strategy';
         expiresIn: '10m',
       },
     }),
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-    }),
+    passportModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
+  exports: [passportModule],
 })
 export class AuthModule {}
