@@ -8,6 +8,7 @@ import { DemoGuard } from './common/guard/demo/demo.guard';
 import { CountTimeInterceptor } from './common/interceptor/count-time/count-time.interceptor';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SchedulingModule } from './scheduling/scheduling.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SchedulingModule } from './scheduling/scheduling.module';
     }),
     PostsModule,
     SchedulingModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
