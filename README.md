@@ -41,4 +41,7 @@ $ docker-compose up -d
 # check database services
 $ docker-compose ps
 $ docker ps
+
+# mysql management page
+http://localhost:8080/
 ```
