@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { LoginDto } from './auth.dto';
+import { JwtPayload, LoginDto } from './auth.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -20,13 +20,13 @@ export class AuthService {
       throw new UnauthorizedException('password is not match');
     }
     const { id } = user;
-    const token = this.jwtService.sign({
+    const payload: JwtPayload = {
       id,
       name,
-    });
+    };
+    const token = this.jwtService.sign(payload);
     return {
-      id,
-      name,
+      ...payload,
       token,
     };
   }
