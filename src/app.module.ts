@@ -7,7 +7,6 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { DemoGuard } from './common/guard/demo/demo.guard';
 import { CountTimeInterceptor } from './common/interceptor/count-time/count-time.interceptor';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SchedulingController } from './scheduling/scheduling.controller';
 import { SchedulingModule } from './scheduling/scheduling.module';
 
 @Module({
@@ -26,7 +25,7 @@ import { SchedulingModule } from './scheduling/scheduling.module';
     PostsModule,
     SchedulingModule,
   ],
-  controllers: [AppController, SchedulingController],
+  controllers: [AppController],
   providers: [
     AppService,
     {
