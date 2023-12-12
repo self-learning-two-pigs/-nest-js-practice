@@ -16,7 +16,7 @@ import {
   ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
-import { CreatePostDto } from './posts.dto';
+import { CreatePostDto, UpdatePostDto } from './posts.dto';
 import { HttpExceptionFilter } from '../common/filter/http-exception/http-exception.filter';
 import { TransformInterceptor } from '../common/interceptor/transform/transform.interceptor';
 import { User } from '../common/decorator/user/user.decorator';
@@ -54,9 +54,10 @@ export class PostsController {
   }
 
   @Put(':id')
+  @UsePipes(ValidationPipe)
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updates: Partial<CreatePostDto>,
+    @Body() updates: UpdatePostDto,
   ) {
     return await this.postsService.update(id, updates);
   }
