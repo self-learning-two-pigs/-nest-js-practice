@@ -9,6 +9,7 @@ import { CountTimeInterceptor } from './common/interceptor/count-time/count-time
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SchedulingModule } from './scheduling/scheduling.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { UserModule } from './user/user.module';
     PostsModule,
     SchedulingModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

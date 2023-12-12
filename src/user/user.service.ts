@@ -38,4 +38,8 @@ export class UserService {
     user.password = newPassword;
     return await this.userRepository.save(user);
   }
+
+  async getByName(name: string) {
+    return await this.userRepository.findOneBy({ name });
+  }
 }
