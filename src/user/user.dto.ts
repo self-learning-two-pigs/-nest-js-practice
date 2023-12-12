@@ -7,3 +7,8 @@ export class UserDto {
   @IsString()
   password: string;
 }
+
+export class UpdateDto {
+  oldPassword: string;
+  newPassword: string;
+}
