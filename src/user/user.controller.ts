@@ -1,7 +1,12 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
+  Get,
+  Param,
+  ParseIntPipe,
   Post,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -14,7 +19,14 @@ export class UserController {
 
   @Post()
   @UsePipes(ValidationPipe)
+  @UseInterceptors(ClassSerializerInterceptor)
   async create(@Body() userDto: UserDto) {
     return await this.userService.createUser(userDto);
+  }
+
+  @Get(':id')
+  @UseInterceptors(ClassSerializerInterceptor)
+  async getById(@Param('id', ParseIntPipe) id: number) {
+    return await this.userService.getById(id);
   }
 }
