@@ -23,6 +23,8 @@ import { User } from '../common/decorator/user/user.decorator';
 import { DemoPipePipe } from '../common/pipe/demo-pipe/demo-pipe.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { User as UserEntity } from '../user/user.entity';
+import { DemoRoleGuard } from '../common/guard/demo-role/demo-role.guard';
+import { Roles } from '../common/decorator/roles/roles.decorator';
 
 @Controller('posts')
 @UseGuards(AuthGuard())
@@ -45,8 +47,8 @@ export class PostsController {
 
   @Get(':id')
   @UseFilters(HttpExceptionFilter)
-  // @UseGuards(DemoRoleGuard)
-  // @Roles('member', 'guest')
+  @UseGuards(DemoRoleGuard)
+  @Roles('member', 'guest')
   async getById(@Param('id', ParseIntPipe) id: number) {
     return await this.postsService.getById(id);
   }

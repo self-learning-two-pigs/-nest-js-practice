@@ -12,9 +12,7 @@ export class DemoRoleGuard implements CanActivate {
     if (!roles) {
       return true;
     }
-    return context
-      .switchToHttp()
-      .getRequest()
-      .user.roles.some((role) => roles.includes(role));
+    const user = context.switchToHttp().getRequest().user;
+    return user.roles.some((role) => roles.includes(role));
   }
 }
